@@ -7,9 +7,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&display=swap">
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
---bg:#d9d4cb;--paper:#efebe4;--ink:#1a1a1a;--sub:#6b665e;--line:#6a9fd8;--pink:#d94fa0;--chip:#e4dfd6}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1b19;--paper:#2a2825;--ink:#ece8e0;--sub:#9b958a;--line:#6a9fd8;--pink:#a63d7d;--chip:#37342f}}
-:root[data-theme="dark"]{--bg:#1c1b19;--paper:#2a2825;--ink:#ece8e0;--sub:#9b958a;--line:#6a9fd8;--pink:#a63d7d;--chip:#37342f}
+--bg:#ffffff;--paper:#ffffff;--ink:#1a1a1a;--sub:#6b665e;--line:#6a9fd8;--pink:#d94fa0;--chip:#e4dfd6}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -24,7 +22,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:"Shippori Mincho
 .title{flex:none;width:var(--s);margin-top:6px;border:0;background:transparent;color:var(--ink);font-family:"Hiragino Mincho ProN","Hiragino Mincho Pro","ヒラギノ明朝 ProN","Yu Mincho","Noto Serif JP",serif;font-weight:600;font-size:22px;line-height:1.3;text-align:center;letter-spacing:.25em;padding:2px 0;outline:none}
 .rule{flex:none;width:var(--s);height:3px;background:var(--line);margin:1px 0 20px}
 .tw{flex:1;min-height:0;width:100%;display:flex;justify-content:center}
-.tate{writing-mode:vertical-rl;height:100%;max-width:100%;width:6em;border:0;resize:none;background:transparent;color:var(--ink);font-family:"Hiragino Mincho ProN","Hiragino Mincho Pro","ヒラギノ明朝 ProN","Yu Mincho","Noto Serif JP",serif;font-size:19px;line-height:1.8;letter-spacing:.06em;padding:2px;outline:none;overflow-x:auto;overflow-y:hidden}
+.tate{writing-mode:vertical-rl;height:100%;max-width:100%;width:6em;border:0;resize:none;background:transparent;color:var(--ink);font-family:"Hiragino Mincho ProN","Hiragino Mincho Pro","ヒラギノ明朝 ProN","Yu Mincho","Noto Serif JP",serif;font-size:22px;line-height:1.8;letter-spacing:.06em;padding:2px;outline:none;overflow-x:auto;overflow-y:hidden}
 .foot{flex:none;width:100%;display:flex;justify-content:space-between;align-items:center;margin-top:4px;font:11px system-ui,sans-serif;color:var(--sub)}
 .foot button{border:0;background:none;color:var(--sub);text-decoration:underline;font-size:11px}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:9;font-family:system-ui,sans-serif;color:#fff;padding:16px}
@@ -36,11 +34,17 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:"Shippori Mincho
 .ov .row{display:flex;gap:12px}
 .ov button{border:0;border-radius:18px;padding:8px 22px;font-size:14px;background:#fff;color:#111}
 .ov button.ok{background:var(--line);color:#fff}
+.start{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;z-index:5}
+.start h1{margin:0;font-family:"Hiragino Mincho ProN","Hiragino Mincho Pro","ヒラギノ明朝 ProN","Yu Mincho","Noto Serif JP",serif;font-weight:600;font-size:40px;letter-spacing:.3em;padding-left:.3em}
+.start .bl{width:min(50vw,200px);height:3px;background:var(--line)}
+.start button{margin-top:18px;border:5px solid var(--ink);background:#fff;color:var(--ink);font-family:"Hiragino Mincho ProN","Hiragino Mincho Pro","ヒラギノ明朝 ProN","Yu Mincho","Noto Serif JP",serif;font-weight:600;font-size:22px;letter-spacing:.4em;padding:10px 28px 10px 34px}
+.wrap.hide{display:none}
 .title::placeholder,.tate::placeholder{color:var(--sub);opacity:.7}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="start" id="start"><h1>そでメモ</h1><div class="bl"></div><button id="go">書く</button></div>
+<div class="wrap hide" id="wrap">
   <div class="bar" id="bar"></div>
   <div class="card">
     <div class="photo" id="photo">タップして写真を選ぶ</div>
@@ -111,6 +115,7 @@ $('cok').onclick=()=>{
 };
 $('del').onclick=()=>{if(!confirm('このメモを削除しますか?'))return;
   items=items.filter(i=>i!==cur);if(!items.length)return newItem();cur=items[0];save();render()};
+$('go').onclick=()=>{$('start').style.display='none';$('wrap').classList.remove('hide');fit()};
 try{document.fonts.ready.then(fit)}catch(e){}
 load();if(!items.length)newItem();else{cur=items[0];render()}
 </script>
